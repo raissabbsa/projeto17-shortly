@@ -1,6 +1,6 @@
 import connection from "../database/db.js";
 
-export async function posturlValidation(req, res, next){
+export async function tokenValidation(req, res, next){
     const {authorization} = req.headers;
     const token = authorization?.replace("Bearer", "");
 
@@ -15,7 +15,6 @@ export async function posturlValidation(req, res, next){
             return res.sendStatus(401);
         }
         res.locals.existSession = existSession;
-
 
     }catch(err){
         console.log(err);
