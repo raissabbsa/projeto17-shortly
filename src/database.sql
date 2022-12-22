@@ -9,14 +9,14 @@ CREATE TABLE users(
 
 CREATE TABLE urls(
     id SERIAL NOT NULL PRIMARY KEY,
-    shortUrlTEXT NOT NULL,
+    "shortUrl" TEXT NOT NULL,
     url TEXT NOT NULL,
-    userId INTEGER NOT NULL REFERENCES users(id),
-    visitCount INTEGER NOT NULL
+    "userId" INTEGER NOT NULL REFERENCES users(id),
+    "visitCount" INTEGER NOT NULL
 );
 
 CREATE TABLE sessions(
     id SERIAL NOT NULL PRIMARY KEY,
-    userId INTEGER NOT NULL REFERENCES users(id),
+    "userId" INTEGER NOT NULL REFERENCES users(id),
     token TEXT NOT NULL UNIQUE
 );
