@@ -70,16 +70,21 @@ export async function geturlsOpen(req, res){
 
 export async function deleteurl(req, res){
     const id = req.params.id;
-    const userId = res.locals.existSession.rows[0].userId;
-
-    if(userId !== id){
-        return res.sendStatus(401);
-    }
+    const session = await res.locals.existSession.rows[0];
 
     try{
-        await connection.query(``)
+        const infoUrl = await connection.query(`SELECT * FROM urls WHERE id = $1`, [id]);
 
+        if(infoUrl.rows.length === 0){
+            return res.sendStatus(404);
+        }
 
+        if(infoUrl.rows[0].userId !== session.userId){
+            return res.sendStatus(401);
+        }
+        await connection.query(`DELETE FROM urls WHERE id = $1`, [id]);
+
+        res.sendStatus(204);
     }catch(err){
         console.log(err);
         res.sendStatus(500);
