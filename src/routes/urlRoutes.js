@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { posturl, geturlsId, geturlsOpen, deleteurl } from "../controllers/urlControllers.js";
-import { tokenValidation } from "../middlewares/urlValidation.middleware.js";
+import { tokenValidation } from "../middlewares/tokenValidation.middleware.js";
 
 const router = Router();
 

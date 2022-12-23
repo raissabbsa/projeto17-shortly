@@ -70,7 +70,7 @@ export async function geturlsOpen(req, res){
 
 export async function deleteurl(req, res){
     const id = req.params.id;
-    const session = await res.locals.existSession.rows[0];
+    const session = res.locals.existSession.rows[0];
 
     try{
         const infoUrl = await connection.query(`SELECT * FROM urls WHERE id = $1`, [id]);
