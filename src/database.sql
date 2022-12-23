@@ -4,7 +4,8 @@ CREATE TABLE users(
     id  SERIAL NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL
+    password TEXT NOT NULL,
+    "createdAt" DATE NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE urls(
@@ -12,11 +13,13 @@ CREATE TABLE urls(
     "shortUrl" TEXT NOT NULL,
     url TEXT NOT NULL,
     "userId" INTEGER NOT NULL REFERENCES users(id),
-    "visitCount" INTEGER NOT NULL
+    "visitCount" INTEGER NOT NULL,
+    "createdAt" DATE NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE sessions(
     id SERIAL NOT NULL PRIMARY KEY,
     "userId" INTEGER NOT NULL REFERENCES users(id),
-    token TEXT NOT NULL UNIQUE
+    token TEXT NOT NULL UNIQUE,
+    "createdAt" DATE NOT NULL DEFAULT NOW()
 );

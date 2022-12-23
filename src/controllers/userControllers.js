@@ -36,3 +36,29 @@ export async function getUSer(req, res){
         res.sendStatus(500);
     }
 }
+
+export async function getRanking(req, res){
+    try{
+         const answer = await connection.query(`
+            SELECT users.id,
+                users.name,
+                COUNT(urls.*) AS "linksCount",
+                SUM(urls."visitCount") AS "visitCount"
+            FROM users LEFT JOIN urls ON urls."userId" = users.id
+            GROUP BY users.id
+            ORDER BY "visitCount" DESC
+            LIMIT 10
+         `);
+
+         for(let i=0; i < answer.rows.length; i++){
+            if(answer.rows[i].visitCount === null){
+                answer.rows[i].visitCount = "0";
+            }
+         }
+         res.status(200).send(answer.rows);
+
+    }catch(err){
+        console.log(err);
+        res.sendStatus(500);
+    }
+}
