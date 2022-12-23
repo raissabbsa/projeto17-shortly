@@ -1,6 +1,6 @@
 import connection from "../database/db.js";
 
-export async function getUSer(req, res){
+export async function getUser(req, res){
     const session = res.locals.existSession.rows[0];
     let urlArray = [];
     let totalVisits = 0;
@@ -13,6 +13,7 @@ export async function getUSer(req, res){
         const user = existUser.rows[0];
         delete user.password;
         delete user.email;
+        delete user.createdAt;
 
         const urls = await connection.query(`
             SELECT * FROM urls WHERE "userId" = $1 ORDER BY id`, [session.userId]);
@@ -20,6 +21,8 @@ export async function getUSer(req, res){
         for(let i=0; i< urls.rows.length; i++){
             const url = urls.rows[i];
             delete url.userId;
+            delete url.createdAt;
+
             urlArray.push(url);
             totalVisits += urls.rows[i].visitCount;
         }

@@ -9,6 +9,4 @@ const connection = new Pool({
     ssl: true,
 });
 
-
-
 export default connection;
